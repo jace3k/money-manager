@@ -10,6 +10,7 @@ const initialState = {
   user: null,
   loginLoading: false,
   balance: 0,
+  initialBalance: 0,
 }
 
 export const userSlice = createSlice({
@@ -33,12 +34,14 @@ export const userSlice = createSlice({
     },
     setAccountBalance: (state, action) => {
       state.balance = action.payload
+    },
+    setInitalBalance: (state, action) => {
+      state.initialBalance = action.payload
     }
-
   },
 })
 
-export const { setUsers, setRecords, setMax, setUser, setLoginLoading, setAccountBalance } = userSlice.actions
+export const { setUsers, setRecords, setMax, setUser, setLoginLoading, setAccountBalance, setInitalBalance } = userSlice.actions
 
 export const loginAsync = () => (dispatch) => {
   dispatch(setLoginLoading(true))

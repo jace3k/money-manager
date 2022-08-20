@@ -5,7 +5,7 @@ import Home from './Home';
 import Navigation from './Navigation';
 
 import { useSelector, useDispatch } from 'react-redux'
-import { setUsers, setRecords, setMax, setUser } from "./slices/userSlice";
+import { setUsers, setRecords, setMax, setUser, setInitalBalance } from "./slices/userSlice";
 
 import { db, auth, provider } from './config/firebase'
 import { get, set, ref, onValue } from "firebase/database";
@@ -15,6 +15,7 @@ function App() {
   const users = useSelector(state => state.user.users)
   const records = useSelector(state => state.user.records)
   const localMaxValue = useSelector(state => state.user.max)
+  const localInitialBalance = useSelector(state => state.user.initialBalance);
   const user = useSelector(state => state.user.user)
   const dispatch = useDispatch()
 
@@ -91,6 +92,16 @@ function App() {
     if (maxValue && maxValue !== localMaxValue)
       dispatch(setMax(maxValue))
   });
+
+  onValue(ref(db, 'initialBalance'), snapshot => {
+    const initialBalance = snapshot.val();
+
+    if (!initialBalance)
+      set(ref(db, 'initialBalance'), 0);
+
+    if (initialBalance && initialBalance !== localInitialBalance)
+      dispatch(setInitalBalance(initialBalance));
+  })
 
   const appRouter = (
     <>

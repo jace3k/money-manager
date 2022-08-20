@@ -13,6 +13,7 @@ const Home = () => {
   const users = useSelector(state => state.user.users)
   const user = useSelector(state => state.user.user)
   const localMaxValue = useSelector(state => state.user.max)
+  const localInitialBalance = useSelector(state => state.user.initialBalance)
   const records = useSelector(state => state.user.records)
   const [userDepositMap, setUserDepositMap] = useState({})
 
@@ -84,8 +85,8 @@ const Home = () => {
 
   React.useEffect(() => {
     const totalValue = records.reduce((total, record) => total += record.amount, 0);
-    dispatch(setAccountBalance(totalValue));
-  }, [records])
+    dispatch(setAccountBalance(localInitialBalance + totalValue));
+  }, [records, localInitialBalance])
 
   React.useEffect(() => {
     const depositMap = getUserDepositsMap();
