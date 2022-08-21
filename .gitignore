@@ -27,3 +27,5 @@ yarn-error.log*
 .firebaserc
 /src/config/firebase-config.js
 database.rules.json
+
+.vscode

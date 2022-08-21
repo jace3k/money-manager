@@ -1,102 +1,79 @@
-import React, { useState } from 'react';
-import { ref, set } from "firebase/database";
-import { InputNumber, Modal, Form, Input, Select, Table, Button } from "antd";
-import FormItem from "antd/lib/form/FormItem";
-import { db } from './config/firebase'
-import { useSelector, useDispatch } from 'react-redux'
-import { createNewRecordAsync } from './slices/userSlice';
+import React, { useState } from "react";
+import { Modal, Table, Button } from "antd";
+import { useSelector } from "react-redux";
 
 const UsersModal = ({ show, onClose }) => {
-  const user = useSelector(state => state.user.user)
-  const users = useSelector(state => state.user.users)
-  const [editModeRecord, setEditModeRecord] = useState(null)
+  const users = useSelector((state) => state.user.users);
+  const [editModeRecord, setEditModeRecord] = useState(null);
 
-  const isEditMode = (id) => id === editModeRecord
-
-  const dispatch = useDispatch()
-
+  const isEditMode = (id) => id === editModeRecord;
 
   const handleSave = () => {
     // TODO
-    console.log('handleSaveNewRecord!!')
-
-  }
-
+    console.log("handleSaveNewRecord!!");
+  };
 
   const columns = [
     {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id'
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
     },
     {
-      title: 'E-mail',
-      dataIndex: 'email',
-      key: 'email'
+      title: "E-mail",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: 'Nazwa',
-      dataIndex: 'displayName',
-      key: 'displayName'
+      title: "Nazwa",
+      dataIndex: "displayName",
+      key: "displayName",
     },
     {
-      title: 'Poziom uprawnień',
-      dataIndex: 'role',
-      key: 'role'
+      title: "Poziom uprawnień",
+      dataIndex: "role",
+      key: "role",
     },
     {
-      title: 'Utworzony',
-      dataIndex: 'createdAt',
-      key: 'createdAt'
+      title: "Utworzony",
+      dataIndex: "createdAt",
+      key: "createdAt",
     },
     {
-      title: 'Akcja',
-      dataIndex: 'id',
-      key: 'action',
-      render: userID => {
+      title: "Akcja",
+      dataIndex: "id",
+      key: "action",
+      render: (userID) => {
         if (isEditMode(userID)) {
           //render button ok and cancel
           return (
             <>
               <Button
                 onClick={() => {
-                  setEditModeRecord(null)
+                  setEditModeRecord(null);
                   // save action
                 }}
               >
                 Zapisz
               </Button>
-              <Button
-                onClick={() => setEditModeRecord(null)}
-              >
-                Anuluj
-              </Button>
+              <Button onClick={() => setEditModeRecord(null)}>Anuluj</Button>
             </>
-          )
-        }
-        else {
+          );
+        } else {
           // render button edit
           return (
             <>
-              <Button
-                onClick={() => setEditModeRecord(userID)}
-              >
-                Edytuj
-              </Button>
-              <Button
-                onClick={() => {}}
-              >
-                Usuń
-              </Button>
+              <Button onClick={() => setEditModeRecord(userID)}>Edytuj</Button>
+              <Button onClick={() => {}}>Usuń</Button>
             </>
-          )
+          );
         }
-      }
-    }
-  ]
+      },
+    },
+  ];
   return (
     <Modal
-      title='Użytkownicy'
+      title="Użytkownicy"
       visible={show}
       onOk={handleSave}
       // okButtonProps={{ disabled: !description }}
@@ -106,8 +83,11 @@ const UsersModal = ({ show, onClose }) => {
       <Table
         size="small"
         columns={columns}
-        dataSource={Object.values(users).map(user => ({ key: user.id, ...user }))}
-        pagination={{ position: ['bottomCenter'], pageSize: 5 }}
+        dataSource={Object.values(users).map((user) => ({
+          key: user.id,
+          ...user,
+        }))}
+        pagination={{ position: ["bottomCenter"], pageSize: 5 }}
       />
       {/* <Form
         onKeyDown={e => {
@@ -140,7 +120,7 @@ const UsersModal = ({ show, onClose }) => {
         </FormItem>
       </Form> */}
     </Modal>
-  )
-}
+  );
+};
 
 export default UsersModal;

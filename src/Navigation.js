@@ -1,18 +1,17 @@
-import React from 'react';
+import React from "react";
 import { Button, PageHeader } from "antd";
-import Loader from './Loader';
-import NewTransactionModal from './NewTransactionModal';
-import { useSelector, useDispatch } from 'react-redux'
-import { loginAsync, logoutAsync } from './slices/userSlice';
-import UsersModal from './UsersModal';
-
+import Loader from "./Loader";
+import NewTransactionModal from "./NewTransactionModal";
+import { useSelector, useDispatch } from "react-redux";
+import { loginAsync, logoutAsync } from "./slices/userSlice";
+import UsersModal from "./UsersModal";
 
 const Navigation = ({ authStateChanged }) => {
   const [showNewTransaction, setShowNewTransaction] = React.useState(false);
   const [showUsersModal, setShowUsersModal] = React.useState(false);
-  const user = useSelector(state => state.user.user)
-  const loginLoading = useSelector(state => state.user.loginLoading)
-  const dispatch = useDispatch()
+  const user = useSelector((state) => state.user.user);
+  const loginLoading = useSelector((state) => state.user.loginLoading);
+  const dispatch = useDispatch();
 
   const extra = [];
 
@@ -21,34 +20,33 @@ const Navigation = ({ authStateChanged }) => {
       <Button
         key={1}
         onClick={() => {
-          dispatch(logoutAsync())
+          dispatch(logoutAsync());
         }}
       >
         Wyloguj
       </Button>
-    )
-  }
-  else {
+    );
+  } else {
     extra.push(
       <Button
         key={2}
         loading={loginLoading}
         type="primary"
         onClick={() => {
-          dispatch(loginAsync())
+          dispatch(loginAsync());
         }}
       >
         Zaloguj
       </Button>
-    )
+    );
   }
 
-  if (user && user.role === 'admin') {
+  if (user && user.role === "admin") {
     extra.push(
       <Button
         key={3}
         onClick={() => {
-          setShowNewTransaction(true)
+          setShowNewTransaction(true);
         }}
       >
         Nowa transakcja
@@ -59,13 +57,12 @@ const Navigation = ({ authStateChanged }) => {
       <Button
         key={4}
         onClick={() => {
-          setShowUsersModal(true)
+          setShowUsersModal(true);
         }}
       >
         Użytkownicy
       </Button>
-    )
-
+    );
   }
 
   extra.reverse();
@@ -73,13 +70,10 @@ const Navigation = ({ authStateChanged }) => {
   return (
     <PageHeader
       title="Skarbówka"
-      subTitle={user
-        ? `Witaj ${user.displayName}!`
-        : 'Witaj!'
-      }
+      subTitle={user ? `Witaj ${user.displayName}!` : "Witaj!"}
       extra={authStateChanged ? extra : <Loader />}
     >
-      {user && user.role === 'admin' && (
+      {user && user.role === "admin" && (
         <>
           <NewTransactionModal
             show={showNewTransaction}
@@ -92,7 +86,7 @@ const Navigation = ({ authStateChanged }) => {
         </>
       )}
     </PageHeader>
-  )
-}
+  );
+};
 
 export default Navigation;
