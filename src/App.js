@@ -74,7 +74,7 @@ const App = () => {
               setOffline(true);
             });
         } else {
-          console.log("Logged out.");
+          console.log("Logged out");
           dispatch(setUser(null));
           setAuthStateChanged(true);
         }
@@ -160,7 +160,7 @@ const App = () => {
     if (
       cleaningSchedule &&
       Object.keys(cleaningSchedule).length !==
-        Object.keys(localCleaningSchedule).length
+      Object.keys(localCleaningSchedule).length
     ) {
       dispatch(setCleaningSchedule(cleaningSchedule));
     }
