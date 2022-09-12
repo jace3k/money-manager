@@ -16,6 +16,7 @@ const initialState = {
   initialBalance: 0,
   activities: {},
   cleaningSchedule: {},
+  cart: [],
 };
 
 export const userSlice = createSlice({
@@ -49,6 +50,9 @@ export const userSlice = createSlice({
     setCleaningSchedule: (state, action) => {
       state.cleaningSchedule = action.payload;
     },
+    setCart: (state, action) => {
+      state.cart = action.payload;
+    },
   },
 });
 
@@ -62,6 +66,7 @@ export const {
   setInitalBalance,
   setActivities,
   setCleaningSchedule,
+  setCart,
 } = userSlice.actions;
 
 export const loginAsync = () => (dispatch) => {
@@ -125,6 +130,11 @@ export const updateUser = (user) => () => {
 
 export const addNextCleaningRecord = (firstDay, record) => () => {
   update(ref(db, `cleaning/${firstDay}`), record);
+};
+
+export const updateCart = (cartList) => () => {
+  const stringifiedList = JSON.stringify(cartList);
+  set(ref(db, "cart/"), stringifiedList);
 };
 
 export default userSlice.reducer;

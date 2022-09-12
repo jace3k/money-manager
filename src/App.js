@@ -14,6 +14,7 @@ import {
   setInitalBalance,
   setActivities,
   setCleaningSchedule,
+  setCart,
 } from "./slices/userSlice";
 
 import { db, auth, provider } from "./config/firebase";
@@ -30,6 +31,7 @@ const App = () => {
     (state) => state.user.cleaningSchedule
   );
   const user = useSelector((state) => state.user.user);
+  const localCart = useSelector((state) => state.user.cart);
   const dispatch = useDispatch();
 
   const [authStateChanged, setAuthStateChanged] = React.useState(false);
@@ -157,12 +159,25 @@ const App = () => {
       console.log("NO [CLEANING SCHEDULE] CREATED!");
     }
 
-    if (
-      cleaningSchedule &&
-      Object.keys(cleaningSchedule).length !==
-      Object.keys(localCleaningSchedule).length
-    ) {
+    const onlineLength = Object.keys(cleaningSchedule).length;
+    const localLength = Object.keys(localCleaningSchedule).length;
+
+    if (cleaningSchedule && onlineLength !== localLength) {
       dispatch(setCleaningSchedule(cleaningSchedule));
+    }
+  });
+
+  onValue(ref(db, "cart"), (snapshot) => {
+    const cart = snapshot.val();
+
+    if (!cart) {
+      console.log("NO [CART] CREATED!");
+    }
+
+    const cartList = JSON.parse(cart);
+
+    if (cartList && cartList.length !== localCart.length) {
+      dispatch(setCart(cartList));
     }
   });
 

@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setAccountBalance } from "./slices/userSlice";
 import TransactionHistoryTable from "./TransactionHistoryTable";
 import CleaningScheduleTable from "./CleaningScheduleTable";
+import CartTable from "./CartTable";
 
 // const BADGE_COLOR_NON_COMPLIANT = '#d46b08'
 const BADGE_COLOR_COMPLIANT = "#595959";
@@ -24,6 +25,7 @@ const Home = () => {
   const users = useSelector((state) => state.user.users);
   const localMaxValue = useSelector((state) => state.user.max);
   const localInitialBalance = useSelector((state) => state.user.initialBalance);
+  const localCart = useSelector((state) => state.user.cart);
   const records = useSelector((state) => state.user.records);
   const [userDepositMap, setUserDepositMap] = useState({});
   const [showUser, setShowUser] = useState(false);
@@ -121,6 +123,10 @@ const Home = () => {
               </Checkbox>
               <Divider />
               <TransactionHistoryTable showUser={showUser} />
+            </Collapse.Panel>
+
+            <Collapse.Panel header="Lista zakupowa">
+              <CartTable data={localCart} />
             </Collapse.Panel>
           </Collapse>
           <Divider />
