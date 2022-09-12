@@ -20,6 +20,6 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
-    "endOfLine": "auto"
+    "endOfLine": 1
   }
 }
