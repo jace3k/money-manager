@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { Row, Col, Progress, Avatar, Badge, Divider, Collapse } from "antd";
+import {
+  Row,
+  Col,
+  Progress,
+  Avatar,
+  Badge,
+  Divider,
+  Collapse,
+  Checkbox,
+} from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { setAccountBalance } from "./slices/userSlice";
 import TransactionHistoryTable from "./TransactionHistoryTable";
@@ -17,6 +26,7 @@ const Home = () => {
   const localInitialBalance = useSelector((state) => state.user.initialBalance);
   const records = useSelector((state) => state.user.records);
   const [userDepositMap, setUserDepositMap] = useState({});
+  const [showUser, setShowUser] = useState(false);
 
   const getUserDepositsMap = () =>
     Object.keys(users).reduce((depositMap, userID) => {
@@ -103,8 +113,14 @@ const Home = () => {
         <Col span={24}>
           <Collapse>
             <Collapse.Panel header="Historia wpłat i wypłat">
+              <Checkbox
+                checked={showUser}
+                onChange={(e) => setShowUser(e.target.checked)}
+              >
+                Pokaż osobę
+              </Checkbox>
               <Divider />
-              <TransactionHistoryTable />
+              <TransactionHistoryTable showUser={showUser} />
             </Collapse.Panel>
           </Collapse>
           <Divider />

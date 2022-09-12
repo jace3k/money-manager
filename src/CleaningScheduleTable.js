@@ -93,10 +93,11 @@ const CleaningScheduleTable = () => {
         <Button onClick={generateRecord}>Wygeneruj nowy tydzień</Button>
       )}
       <Table
+        size="small"
         bordered
         columns={columns}
         dataSource={data}
-        pagination={{ position: ["bottomCenter"], pageSize: 5 }}
+        pagination={{ position: ["bottomCenter"], pageSize: 10 }}
         rowClassName={(row) => {
           const firstDay = new Date(row.dateKey).getTime();
           const now = new Date().getTime();
