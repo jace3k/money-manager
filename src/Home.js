@@ -32,14 +32,16 @@ const Home = () => {
 
   const getUserDepositsMap = () =>
     Object.keys(users).reduce((depositMap, userID) => {
-      const userTotalDeposit = records.reduce(
-        (acc, record) =>
-          record.userID === userID && record.amount > 0
-            ? acc + record.amount
-            : acc,
-        0
-      );
-      depositMap[userID] = userTotalDeposit.toFixed(2);
+      // const userTotalDeposit = records.reduce(
+      //   (acc, record) =>
+      //     record.userID === userID && record.amount > 0
+      //       ? acc + record.amount
+      //       : acc,
+      //   0
+      // );
+      // depositMap[userID] = userTotalDeposit.toFixed(2);
+      depositMap[userID] =
+        users[userID]?.["deposit"]?.["amount"]?.toFixed(2) || 0;
       return depositMap;
     }, {});
 

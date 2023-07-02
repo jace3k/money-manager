@@ -128,6 +128,10 @@ export const updateUser = (user) => () => {
   update(ref(db, "users/" + user.id), user);
 };
 
+export const updateUserDeposit = (amount, userID) => () => {
+  update(ref(db, "users/" + userID + "/deposit"), amount);
+};
+
 export const addNextCleaningRecord = (firstDay, record) => () => {
   update(ref(db, `cleaning/${firstDay}`), record);
 };

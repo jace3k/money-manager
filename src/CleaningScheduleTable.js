@@ -4,12 +4,16 @@ import React, { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addNextCleaningRecord } from "./slices/userSlice";
 
+const pad = (val) => {
+  return ("0" + val).slice(-2);
+};
+
 const getFromToDate = (firstDayMs) => {
   const firstDay = new Date(firstDayMs);
   const lastDayMs = firstDayMs + 6 * 24 * 60 * 60 * 1000;
   const lastDay = new Date(lastDayMs);
-  const from = `${firstDay.getDate()}.${firstDay.getMonth() + 1}`;
-  const to = `${lastDay.getDate()}.${lastDay.getMonth() + 1}`;
+  const from = `${pad(firstDay.getDate())}.${pad(firstDay.getMonth() + 1)}`;
+  const to = `${pad(lastDay.getDate())}.${pad(lastDay.getMonth() + 1)}`;
   return `${from} - ${to}`;
 };
 

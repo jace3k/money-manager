@@ -2,7 +2,7 @@ import React from "react";
 import { InputNumber, Modal, Form, Input, Select } from "antd";
 import FormItem from "antd/lib/form/FormItem";
 import { useSelector, useDispatch } from "react-redux";
-import { createNewRecordAsync } from "./slices/userSlice";
+import { createNewRecordAsync, updateUserDeposit } from "./slices/userSlice";
 
 const NewTransactionModal = ({ show, onClose }) => {
   const user = useSelector((state) => state.user.user);
@@ -27,6 +27,11 @@ const NewTransactionModal = ({ show, onClose }) => {
 
     // set(ref(db, 'records/' + newRecord.timestamp), newRecord)
     dispatch(createNewRecordAsync(newRecord));
+
+    if (amount > 0) {
+      dispatch(updateUserDeposit({ amount }, selectedUser));
+    }
+
     onClose();
     setAmount(0);
     setDescription("");
